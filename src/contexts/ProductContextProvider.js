@@ -53,6 +53,7 @@ const ProductContextProvider = ({ children }) => {
   let values = {
     products: state.products,
     getProducts,
+    addProduct,
   };
 
   return (

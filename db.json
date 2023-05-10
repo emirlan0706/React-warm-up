@@ -1,7 +1,12 @@
 {
   "products": [
     {
-      "name": "rena"
+      "title": "awe",
+      "description": "awe",
+      "price": "awe",
+      "category": "books",
+      "image": "awe",
+      "id": 1
     }
   ]
 }
