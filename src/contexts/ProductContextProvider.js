@@ -42,6 +42,14 @@ const ProductContextProvider = ({ children }) => {
     }
   }
 
+  async function addProduct(newProduct) {
+    try {
+      await axios.post(API, newProduct);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   let values = {
     products: state.products,
     getProducts,
