@@ -3,10 +3,18 @@
     {
       "title": "awe",
       "description": "awe",
-      "price": "awe",
+      "price": "123",
       "category": "books",
-      "image": "awe",
+      "image": "awae1",
       "id": 1
+    },
+    {
+      "title": "gew",
+      "description": "gew",
+      "price": "321",
+      "category": "books",
+      "image": "geew",
+      "id": 2
     }
   ]
 }

@@ -50,10 +50,43 @@ const ProductContextProvider = ({ children }) => {
     }
   }
 
+  async function deleteProduct(id) {
+    try {
+      await axios.delete(`${API}/${id}`);
+      getProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getOneProduct(id) {
+    try {
+      let res = await axios.get(`${API}/${id}`);
+      dispatch({
+        type: ACTIONS.oneProduct,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function editProduct(obj, id) {
+    try {
+      await axios.patch(`${API}/${id}`, obj);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   let values = {
     products: state.products,
+    oneProduct: state.oneProduct,
     getProducts,
     addProduct,
+    deleteProduct,
+    getOneProduct,
+    editProduct,
   };
 
   return (
