@@ -8,7 +8,7 @@ export const useProduct = () => useContext(productContext);
 
 const INIT_STATE = {
   products: [],
-  oneProduct: {},
+  oneProduct: null,
   pageTotalCount: 1,
 };
 

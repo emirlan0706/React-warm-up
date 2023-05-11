@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useProduct } from "../contexts/ProductContextProvider";
+import { Link } from "react-router-dom";
 
 export default function ProductCard({ item }) {
   const { deleteProduct } = useProduct();
@@ -22,8 +23,12 @@ export default function ProductCard({ item }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Details</Button>
-        <Button size="small">Edit</Button>
+        <Button size="small" component={Link} to={`/details/${item.id}`}>
+          Details
+        </Button>
+        <Button size="small" component={Link} to={`/edit/${item.id}`}>
+          Edit
+        </Button>
         <Button size="small" onClick={() => deleteProduct(item.id)}>
           Delete
         </Button>
