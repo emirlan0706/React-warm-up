@@ -15,6 +15,46 @@
       "category": "books",
       "image": "geew",
       "id": 2
+    },
+    {
+      "title": "jira",
+      "description": "dqwdqwd",
+      "price": "541",
+      "category": "books",
+      "image": "geew",
+      "id": 3
+    },
+    {
+      "title": "por",
+      "description": "wer",
+      "price": "512",
+      "category": "jewelry",
+      "image": "thytn",
+      "id": 4
+    },
+    {
+      "title": "plj",
+      "description": "nhfbg",
+      "price": "631",
+      "category": "jewelry",
+      "image": "adffwafwa",
+      "id": 5
+    },
+    {
+      "title": "lfqwf",
+      "description": "gyrjr",
+      "price": "765",
+      "category": "books",
+      "image": "afwscx ",
+      "id": 6
+    },
+    {
+      "title": "mnbv",
+      "description": "vcbxc",
+      "price": "5623",
+      "category": "electronics",
+      "image": "fafcawd",
+      "id": 7
     }
   ]
 }

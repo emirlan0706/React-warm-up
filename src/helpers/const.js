@@ -1,3 +1,5 @@
+export const LIMIT = 6;
+
 export const ACTIONS = {
   products: "products",
   oneProduct: "oneProduct",

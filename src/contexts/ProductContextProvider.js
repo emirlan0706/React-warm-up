@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { ACTIONS, API } from "../helpers/const";
+import { ACTIONS, API, LIMIT } from "../helpers/const";
 import axios from "axios";
 
 const productContext = createContext();
@@ -30,13 +30,21 @@ const ProductContextProvider = ({ children }) => {
 
   async function getProducts() {
     try {
-      const res = await axios.get(API);
+      const res = await axios.get(
+        `${API}${window.location.search || `?_limit=${LIMIT}`}`
+      );
+      const totalPages = Math.ceil(res.headers["x-total-count"] / LIMIT);
 
       let action = {
         type: ACTIONS.products,
         payload: res.data,
       };
       dispatch(action);
+
+      dispatch({
+        type: ACTIONS.pageTotalCount,
+        payload: totalPages,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +90,7 @@ const ProductContextProvider = ({ children }) => {
   let values = {
     products: state.products,
     oneProduct: state.oneProduct,
+    pageTotalCount: state.pageTotalCount,
     getProducts,
     addProduct,
     deleteProduct,
