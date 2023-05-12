@@ -1,19 +1,62 @@
 import React, { useEffect, useState } from "react";
 import { useProduct } from "../contexts/ProductContextProvider";
 import ProductCard from "./ProductCard";
-import { Box, Grid, Pagination, TextField } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Pagination,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useSearchParams } from "react-router-dom";
+import { LIMIT } from "../helpers/const";
 
 const ProductList = () => {
   const { products, getProducts, pageTotalCount } = useProduct();
-  const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState("");
+
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState(searchParams.get("q") || "");
+  const [category, setCategory] = useState(
+    searchParams.get("category") || "all"
+  );
+  console.log(searchParams.get("q"), "PARAAAAAAMS");
   useEffect(() => {
-    setSearchParams({
-      q: search,
-    });
-  }, [search]);
+    if (category === "all") {
+      setSearchParams({
+        q: search,
+        _page: 1,
+        _limit: LIMIT,
+      });
+    } else {
+      setSearchParams({
+        q: search,
+        category: category,
+        _page: 1,
+        _limit: LIMIT,
+      });
+    }
+  }, [search, category]);
+
+  useEffect(() => {
+    if (category === "all") {
+      setSearchParams({
+        q: search,
+        _page: page,
+        _limit: LIMIT,
+      });
+    } else {
+      setSearchParams({
+        q: search,
+        category: category,
+        _page: page,
+        _limit: LIMIT,
+      });
+    }
+  }, [page]);
 
   useEffect(() => {
     getProducts();
@@ -22,6 +65,13 @@ const ProductList = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
+  useEffect(() => {
+    if (pageTotalCount < page) {
+      setPage(pageTotalCount);
+    }
+  }, [pageTotalCount]);
+
   return (
     <div>
       <Box
@@ -38,6 +88,21 @@ const ProductList = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={category}
+            label="Age"
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <MenuItem value={"all"}>All</MenuItem>
+            <MenuItem value={"electronics"}>Electronics</MenuItem>
+            <MenuItem value={"jewelry"}>Jewelry</MenuItem>
+            <MenuItem value={"books"}>Books</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
       <Grid container spacing={2}>
         {products.map((item) => (
