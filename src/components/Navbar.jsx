@@ -12,9 +12,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useAuth } from "../contexts/AuthContextProvider";
+import { Link } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = [{ title: "Home", link: "/" }];
+
+const adminPages = [{ title: "Add Product", link: "/add" }];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -34,6 +37,8 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const { user, logout, isAdmin } = useAuth();
 
   return (
     <AppBar position="static">
@@ -87,11 +92,31 @@ function Navbar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              {isAdmin()
+                ? pages.concat(adminPages).map((page) => (
+                    <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                      <Typography
+                        textAlign="center"
+                        component={Link}
+                        to={page.link}
+                        sx={{ color: "white" }}
+                      >
+                        {page.title}
+                      </Typography>
+                    </MenuItem>
+                  ))
+                : pages.map((page) => (
+                    <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                      <Typography
+                        textAlign="center"
+                        component={Link}
+                        to={page.link}
+                        sx={{ color: "white" }}
+                      >
+                        {page.title}
+                      </Typography>
+                    </MenuItem>
+                  ))}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -114,23 +139,45 @@ function Navbar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            {isAdmin()
+              ? pages.concat(adminPages).map((page) => (
+                  <Button key={page.title} onClick={handleCloseNavMenu}>
+                    <Typography
+                      textAlign="center"
+                      component={Link}
+                      to={page.link}
+                      sx={{ color: "white" }}
+                    >
+                      {page.title}
+                    </Typography>
+                  </Button>
+                ))
+              : pages.map((page) => (
+                  <Button key={page.title} onClick={handleCloseNavMenu}>
+                    <Typography
+                      textAlign="center"
+                      component={Link}
+                      to={page.link}
+                      sx={{ color: "white" }}
+                    >
+                      {page.title}
+                    </Typography>
+                  </Button>
+                ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {user ? (
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={user.displayName} src={user.photoURL} />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Button component={Link} to={"/auth"} color="inherit">
+                Login
+              </Button>
+            )}
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -147,11 +194,9 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={logout}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

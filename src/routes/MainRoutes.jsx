@@ -17,6 +17,8 @@ const MainRoutes = () => {
           <Route path="/edit/:id" element={<EditProductPage />} />
           <Route path="/auth" element={<AuthPage />} />
         </Route>
+
+        <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </div>
   );

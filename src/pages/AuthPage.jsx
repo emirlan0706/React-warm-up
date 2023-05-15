@@ -37,7 +37,7 @@ const theme = createTheme();
 export default function AuthPage() {
   const [isLogin, setIsLogin] = React.useState(true);
 
-  const { register } = useAuth();
+  const { register, login } = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -45,8 +45,14 @@ export default function AuthPage() {
     let user = {
       email: data.get("email"),
       password: data.get("password"),
+      displayName: data.get("displayName"),
+      photoURL: data.get("photoURL"),
     };
-    register(user);
+    if (isLogin) {
+      login(user);
+    } else {
+      register(user);
+    }
   };
 
   return (
@@ -93,6 +99,28 @@ export default function AuthPage() {
               id="password"
               autoComplete="current-password"
             />
+            {!isLogin ? (
+              <>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  name="displayName"
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="photoURL"
+                  label="Photo"
+                  type="password"
+                  id="photo"
+                />
+              </>
+            ) : null}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -103,17 +131,25 @@ export default function AuthPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              {isLogin ? "Sign In" : "Sign Up"}
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+                {isLogin ? (
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                ) : null}
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => setIsLogin(!isLogin)}
+                >
+                  {isLogin
+                    ? "Dont't have an account? Sign Up"
+                    : "Alredy have an account? Sign In"}
                 </Link>
               </Grid>
             </Grid>
