@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { notifyError } from "../components/Toastify";
 
 const authContext = createContext();
 
@@ -29,7 +30,10 @@ const AuthContextProvider = ({ children }) => {
   async function register({ email, password, name, photo }) {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-    } catch (error) {}
+    } catch (error) {
+      notifyError(error);
+      console.log(error);
+    }
   }
 
   let values = {
