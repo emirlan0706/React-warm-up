@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { ACTIONS, API, LIMIT } from "../helpers/const";
+import { ACTIONS, API } from "../helpers/ACTIONS";
 import axios from "axios";
+import { LIMIT } from "../helpers/const";
 
 const productContext = createContext();
 
-export const useProduct = () => useContext(productContext);
+export const UseProduct = () => useContext(productContext);
 
 const INIT_STATE = {
   products: [],
@@ -33,7 +34,8 @@ const ProductContextProvider = ({ children }) => {
       const res = await axios.get(
         `${API}${window.location.search || `?_limit=${LIMIT}`}`
       );
-      const totalPages = Math.ceil(res.headers["x-total-count"] / LIMIT);
+
+      const totalPage = Math.ceil(res.headers["x-total-count"] / LIMIT);
 
       let action = {
         type: ACTIONS.products,
@@ -43,7 +45,7 @@ const ProductContextProvider = ({ children }) => {
 
       dispatch({
         type: ACTIONS.pageTotalCount,
-        payload: totalPages,
+        payload: totalPage,
       });
     } catch (error) {
       console.log(error);
@@ -57,7 +59,6 @@ const ProductContextProvider = ({ children }) => {
       console.log(error);
     }
   }
-
   async function deleteProduct(id) {
     try {
       await axios.delete(`${API}/${id}`);
@@ -79,7 +80,7 @@ const ProductContextProvider = ({ children }) => {
     }
   }
 
-  async function editProduct(obj, id) {
+  async function editeProduct(obj, id) {
     try {
       await axios.patch(`${API}/${id}`, obj);
     } catch (error) {
@@ -94,8 +95,8 @@ const ProductContextProvider = ({ children }) => {
     getProducts,
     addProduct,
     deleteProduct,
+    editeProduct,
     getOneProduct,
-    editProduct,
   };
 
   return (

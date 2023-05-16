@@ -1,5 +1,3 @@
-import React, { useEffect } from "react";
-import { useProduct } from "../contexts/ProductContextProvider";
 import {
   Box,
   Button,
@@ -9,12 +7,14 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import React from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { UseProduct } from "../contexts/ProductContextProvider";
 
 const ProductDetailsPage = () => {
-  const { oneProduct, getOneProduct } = useProduct();
+  const { oneProduct, getOneProduct } = UseProduct();
   const params = useParams();
-
   useEffect(() => {
     getOneProduct(params.id);
   }, []);
@@ -37,7 +37,7 @@ const ProductDetailsPage = () => {
               <Typography variant="body2" color="text.secondary">
                 {oneProduct.description}
               </Typography>
-              <Typography variant="h6">${oneProduct.price}</Typography>
+              <Typography variant="h6">{oneProduct.price}</Typography>
             </CardContent>
             <CardActions>
               <Button size="small">Share</Button>
@@ -46,7 +46,7 @@ const ProductDetailsPage = () => {
           </Box>
         </Card>
       ) : (
-        <h1>Loading...</h1>
+        <h1>Loading</h1>
       )}
     </div>
   );

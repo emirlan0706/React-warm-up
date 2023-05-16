@@ -6,18 +6,19 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
-import { useProduct } from "../contexts/ProductContextProvider";
+import React from "react";
+import { useState } from "react";
+import { UseProduct } from "../contexts/ProductContextProvider";
 
 const AddProductPage = () => {
-  const { addProduct } = useProduct();
+  const { addProduct } = UseProduct();
 
   const [formValue, setFormValue] = useState({
     title: "",
     description: "",
-    price: "",
-    category: "",
+    prise: "",
     image: "",
+    category: "",
   });
 
   function handleChange(e) {
@@ -26,21 +27,21 @@ const AddProductPage = () => {
       [e.target.name]: e.target.value,
     };
     setFormValue(obj);
+    console.log(formValue);
   }
 
-  function handleSubmit(e) {
+  function handleSumbit(e) {
     e.preventDefault();
     if (
       !formValue.title.trim() ||
       !formValue.description.trim() ||
-      !formValue.price.trim() ||
+      !formValue.prise.trim() ||
       !formValue.image.trim() ||
       !formValue.category.trim()
     ) {
-      alert("fill the fields");
+      alert("full the fileds");
       return;
     }
-
     addProduct(formValue);
   }
 
@@ -48,7 +49,7 @@ const AddProductPage = () => {
     <div>
       <h1 style={{ textAlign: "center" }}>Add Product</h1>
       <form
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={(e) => handleSumbit(e)}
         style={{
           maxWidth: "500px",
           margin: "0 auto",
@@ -65,16 +66,16 @@ const AddProductPage = () => {
           variant="outlined"
         />
         <TextField
-          value={formValue.descrption}
+          value={formValue.description}
           onChange={(e) => handleChange(e)}
           name="description"
           label="Description"
           variant="outlined"
         />
         <TextField
-          value={formValue.price}
+          value={formValue.prise}
           onChange={(e) => handleChange(e)}
-          name="price"
+          name="prise"
           label="Price"
           variant="outlined"
         />
@@ -89,18 +90,18 @@ const AddProductPage = () => {
           <InputLabel id="demo-simple-select-label">Category</InputLabel>
           <Select
             labelId="demo-simple-select-label"
+            onChange={(e) => handleChange(e)}
             id="demo-simple-select"
             label="Category"
             name="category"
             value={formValue.category}
-            onChange={(e) => handleChange(e)}
           >
             <MenuItem value={"electronics"}>Electronics</MenuItem>
-            <MenuItem value={"jewelry"}>Jewelry</MenuItem>
+            <MenuItem value={"jewelry"}>jewelry</MenuItem>
             <MenuItem value={"books"}>Books</MenuItem>
           </Select>
         </FormControl>
-        <Button type="submit">Send Product</Button>
+        <Button type="sumbit">Send Product</Button>
       </form>
     </div>
   );

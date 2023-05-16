@@ -1,11 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import AuthContextProvider from "../contexts/AuthContextProvider";
 import MainLayout from "../layouts/MainLayout";
-import HomePage from "../pages/HomePage";
 import AddProductPage from "../pages/AddProductPage";
-import ProductDetailsPage from "../pages/ProductDetailsPage";
-import EditProductPage from "../pages/EditProductPage";
 import AuthPage from "../pages/AuthPage";
+import EditProductPage from "../pages/EditProductPage";
+import HomePage from "../pages/HomePage";
+import ProductDetailsPage from "../pages/ProductDetailsPage";
+
 const MainRoutes = () => {
   return (
     <div>
@@ -17,7 +19,6 @@ const MainRoutes = () => {
           <Route path="/edit/:id" element={<EditProductPage />} />
           <Route path="/auth" element={<AuthPage />} />
         </Route>
-
         <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </div>

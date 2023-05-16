@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { useProduct } from "../contexts/ProductContextProvider";
-import ProductCard from "./ProductCard";
 import {
   Box,
   FormControl,
@@ -11,19 +8,21 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { UseProduct } from "../contexts/ProductContextProvider";
 import { LIMIT } from "../helpers/const";
+import ProductCard from "./ProductCard";
 
 const ProductList = () => {
-  const { products, getProducts, pageTotalCount } = useProduct();
-  const [searchParams, setSearchParams] = useSearchParams();
-
+  const { products, getProducts, pageTotalCount } = UseProduct();
   const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("q") || "");
   const [category, setCategory] = useState(
     searchParams.get("category") || "all"
   );
-  console.log(searchParams.get("q"), "PARAAAAAAMS");
   useEffect(() => {
     if (category === "all") {
       setSearchParams({
@@ -72,33 +71,34 @@ const ProductList = () => {
     }
   }, [pageTotalCount]);
 
+  console.log(products);
   return (
     <div>
       <Box
         sx={{
-          maxWidth: 300,
-          margin: "20px  auto",
+          maxWidth: "200px",
+          margin: "20px auto",
           display: "flex",
           gap: "30px",
         }}
       >
         <TextField
-          label="Search..."
+          label="search"
           variant="outlined"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <InputLabel id="demo-simple-select-label">Catigory</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={category}
-            label="Age"
+            label="category"
             onChange={(e) => setCategory(e.target.value)}
           >
             <MenuItem value={"all"}>All</MenuItem>
-            <MenuItem value={"electronics"}>Electronics</MenuItem>
+            <MenuItem value={"electronics "}>electronics</MenuItem>
             <MenuItem value={"jewelry"}>Jewelry</MenuItem>
             <MenuItem value={"books"}>Books</MenuItem>
           </Select>
@@ -116,6 +116,8 @@ const ProductList = () => {
           count={pageTotalCount}
           page={page}
           onChange={(e, p) => setPage(p)}
+          variant="outlined"
+          color="secondary"
         />
       </Box>
     </div>

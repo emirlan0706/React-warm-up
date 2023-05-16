@@ -5,12 +5,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useProduct } from "../contexts/ProductContextProvider";
+import { UseProduct } from "../contexts/ProductContextProvider";
 import { Link } from "react-router-dom";
 
 export default function ProductCard({ item }) {
-  const { deleteProduct } = useProduct();
-
+  const { deleteProduct } = UseProduct();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia sx={{ height: 140 }} image={item.image} title="green iguana" />
@@ -29,7 +28,7 @@ export default function ProductCard({ item }) {
         <Button size="small" component={Link} to={`/edit/${item.id}`}>
           Edit
         </Button>
-        <Button size="small" onClick={() => deleteProduct(item.id)}>
+        <Button onClick={() => deleteProduct(item.id)} size="small">
           Delete
         </Button>
       </CardActions>

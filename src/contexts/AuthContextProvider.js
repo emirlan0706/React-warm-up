@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
-import { ACTIONS, ADMINS } from "../helpers/const";
+import { ACTIONS } from "../helpers/ACTIONS";
 import { auth } from "../fire";
 import {
   createUserWithEmailAndPassword,
@@ -8,7 +8,9 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { notify, notifyError } from "../components/Toastify";
+import { notifyError } from "../components/Toastify";
+import { async } from "@firebase/util";
+import { ADMINS } from "../helpers/const";
 
 const authContext = createContext();
 
@@ -18,7 +20,7 @@ const INIT_STATE = {
   user: null,
 };
 
-function reducer(state, action) {
+function reduser(state, action) {
   switch (action.type) {
     case ACTIONS.user:
       return { ...state, user: action.payload };
@@ -28,14 +30,14 @@ function reducer(state, action) {
 }
 
 const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, INIT_STATE);
+  const [state, dispatch] = useReducer(reduser, INIT_STATE);
 
-  async function register({ email, password, displayName, photoURL }) {
+  async function register({ email, password, displayName, photoURl }) {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, {
         displayName,
-        photoURL,
+        photoURl,
       });
     } catch (error) {
       notifyError(error.code);
@@ -60,7 +62,6 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       dispatch({
         type: ACTIONS.user,
         payload: user,
@@ -82,7 +83,6 @@ const AuthContextProvider = ({ children }) => {
     logout,
     isAdmin,
   };
-
   return <authContext.Provider value={values}>{children}</authContext.Provider>;
 };
 

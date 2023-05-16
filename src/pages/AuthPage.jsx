@@ -46,7 +46,7 @@ export default function AuthPage() {
       email: data.get("email"),
       password: data.get("password"),
       displayName: data.get("displayName"),
-      photoURL: data.get("photoURL"),
+      photoURL: data.get("photo"),
     };
     if (isLogin) {
       login(user);
@@ -105,10 +105,9 @@ export default function AuthPage() {
                   margin="normal"
                   required
                   fullWidth
-                  id="name"
-                  label="Name"
                   name="displayName"
-                  autoFocus
+                  label="Name"
+                  id="name"
                 />
                 <TextField
                   margin="normal"
@@ -116,7 +115,6 @@ export default function AuthPage() {
                   fullWidth
                   name="photoURL"
                   label="Photo"
-                  type="password"
                   id="photo"
                 />
               </>
@@ -131,7 +129,8 @@ export default function AuthPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              {isLogin ? "Sign In" : "Sign Up"}
+              {isLogin ? "SignIn " : "Sign Up"}
+              Sign In
             </Button>
             <Grid container>
               <Grid item xs>
@@ -147,9 +146,7 @@ export default function AuthPage() {
                   variant="body2"
                   onClick={() => setIsLogin(!isLogin)}
                 >
-                  {isLogin
-                    ? "Dont't have an account? Sign Up"
-                    : "Alredy have an account? Sign In"}
+                  {isLogin ? "Sign Up" : " SignIn"}
                 </Link>
               </Grid>
             </Grid>
