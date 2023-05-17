@@ -4,6 +4,7 @@ import AuthContextProvider from "../contexts/AuthContextProvider";
 import MainLayout from "../layouts/MainLayout";
 import AddProductPage from "../pages/AddProductPage";
 import AuthPage from "../pages/AuthPage";
+import CartPage from "../pages/CartPage";
 import EditProductPage from "../pages/EditProductPage";
 import HomePage from "../pages/HomePage";
 import ProductDetailsPage from "../pages/ProductDetailsPage";
@@ -18,6 +19,7 @@ const MainRoutes = () => {
           <Route path="/details/:id" element={<ProductDetailsPage />} />
           <Route path="/edit/:id" element={<EditProductPage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Route>
         <Route path="/auth" element={<AuthPage />} />
       </Routes>

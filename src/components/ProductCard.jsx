@@ -7,9 +7,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { UseProduct } from "../contexts/ProductContextProvider";
 import { Link } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import { AddShoppingCart } from "@mui/icons-material";
+import { useCart } from "../contexts/CartContextProvider";
 
 export default function ProductCard({ item }) {
   const { deleteProduct } = UseProduct();
+  const { addProductToCart } = useCart();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia sx={{ height: 140 }} image={item.image} title="green iguana" />
@@ -31,6 +35,9 @@ export default function ProductCard({ item }) {
         <Button onClick={() => deleteProduct(item.id)} size="small">
           Delete
         </Button>
+        <IconButton onClick={() => addProductToCart(item)}>
+          <AddShoppingCart />
+        </IconButton>
       </CardActions>
     </Card>
   );

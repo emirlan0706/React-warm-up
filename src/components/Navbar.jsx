@@ -14,6 +14,8 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useAuth } from "../contexts/AuthContextProvider";
 import { Link } from "react-router-dom";
+import { Badge } from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
 
 const pages = [{ title: "Home", link: "/" }];
 
@@ -167,6 +169,11 @@ function Navbar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <IconButton component={Link} to="/cart" sx={{ color: "white" }}>
+              <Badge badgeContent={5} color="error">
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
             {user ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
